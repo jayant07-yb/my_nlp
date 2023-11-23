@@ -55,6 +55,10 @@ import os
 import random
 import json
 import argparse
+import sys
+
+sys.path.append(os.path.abspath('utils'))
+from utils.bigram_utils import get_sentences_for_testing, plot_graph
 
 MAX_VOCAB = 20000000
 BIGRAM_OUTPUT = 'output/bigramprobab.json'
@@ -219,6 +223,8 @@ def validate_unique_words(unique_words):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-n', '--new_data', type=bool, default=0, help='New data to be created')
+    parser.add_argument('-t', '--test_model', type=bool, default=0, help='Test the model on random and real sentences')
+
     args = parser.parse_args()
     new_data = args.new_data
         
@@ -239,6 +245,20 @@ if __name__ == '__main__':
     else:
         reader = WikiReader(BIGRAM_OUTPUT)
         validate_unique_words(reader.unique_words)
+
+    if args.test_model:
+        real_sentences , fake_sentences = get_sentences_for_testing()
+        real_sentences_probability = []
+        fake_sentences_probability = []
+        for sentence in real_sentences:
+            real_sentences_probability.append(reader.sentence_prob(sentence))
+        for sentence in fake_sentences:
+            fake_sentences_probability.append(reader.sentence_prob(sentence))
+        
+        print("Mean probability of real sentences: ", np.mean(real_sentences_probability))
+        print("Mean probability of fake sentences: ", np.mean(fake_sentences_probability))
+
+        plot_graph(real_sentences_probability, fake_sentences_probability)
 
     while True:
         sentence = input("Give me a sentence: ")
