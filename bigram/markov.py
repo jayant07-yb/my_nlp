@@ -57,8 +57,8 @@ import json
 import argparse
 import sys
 
-sys.path.append(os.path.abspath('utils'))
-from utils.bigram_utils import get_sentences_for_testing, plot_graph
+# sys.path.append(os.path.abspath('utils'))
+# from utils.bigram_utils import get_sentences_for_testing, plot_graph
 
 MAX_VOCAB = 20000000
 BIGRAM_OUTPUT = 'output/bigramprobab.json'

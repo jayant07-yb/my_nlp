@@ -61,6 +61,13 @@ class GloveVectorizer:
         print("Empty count is %d" % empty_cnt)
         ##### Now we have the vector representation of the data
         return X
+    
+    def transform_word(self, word):
+        ### Data is basically the dataframe....
+        if word in self.word2vec.keys():
+            return self.word2vec[word]
+        else:
+            return None
 
     def find_closest(self, vector):
         return self.idx2word[self.spicy_tree.query(vector)]
