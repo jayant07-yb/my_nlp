@@ -61,7 +61,7 @@ import sys
 # from utils.bigram_utils import get_sentences_for_testing, plot_graph
 
 MAX_VOCAB = 20000000
-BIGRAM_OUTPUT = 'output/bigramprobab.json'
+BIGRAM_OUTPUT = 'large_files/output/bigramprobab2.json'
 
 class WikiReader:
     def process_sentence(self, sentence):

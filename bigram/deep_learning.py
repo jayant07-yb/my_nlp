@@ -20,7 +20,7 @@ from markov import WikiReader
 #     def __init__
 INPUT_DATA = 'large_files/output/bigramprobab2.json'
 
-def get_data():
+def get_data(max_len):
     # Get the data
     with open(INPUT_DATA, 'r') as f:
         raw_data = json.load(f)
@@ -40,12 +40,15 @@ def get_data():
         
             ### Lets add a log for better tunability
             dataY.append(np.log(raw_data[a][b]))
+
+            if max_len != -1 and len(dataX) >= max_len:
+                break
     
     return dataX, dataY
 
-def get_training_data():
+def get_training_data(max_len=-1):
     time_start = time.time()
-    dataX, dataY = get_data()
+    dataX, dataY = get_data(max_len)
     trainX, testX, trainY, testY = train_test_split(dataX, dataY, test_size=0.2)
 
     print('TrainX shape: ', len(trainX))
